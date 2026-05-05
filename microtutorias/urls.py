@@ -17,11 +17,23 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView
+
+from bookings.views import BookingViewSet
+from subjects.views import SubjectViewSet
+from tutoring.views import TutoringViewSet
+from users.views import UserViewSet
+
+router = DefaultRouter()
+router.register(r"tutorias", TutoringViewSet)
+router.register(r"bookings", BookingViewSet)
+router.register(r"subjects", SubjectViewSet)
+router.register(r"users", UserViewSet)
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/token/", TokenObtainPairView.as_view()),
-    path("api/", include("tutoring.urls")),
-    path("api/", include("bookings.urls")),
+    path("api/", include(router.urls)),
 ]

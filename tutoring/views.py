@@ -1,10 +1,9 @@
-from rest_framework import generics
+from rest_framework.viewsets import ModelViewSet
 
 from .models import TutoringAd
 from .serializers import TutoringAdSerializer
 
 
-# Create your views here.
-class TutoringListView(generics.ListAPIView):
+class TutoringViewSet(ModelViewSet):
     queryset = TutoringAd.objects.all()
     serializer_class = TutoringAdSerializer
