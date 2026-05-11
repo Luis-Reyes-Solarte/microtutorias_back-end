@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "users",
     "subjects",
     "tutoring",
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -128,3 +131,14 @@ REST_FRAMEWORK = {
     ),
 }
 AUTH_USER_MODEL = "users.User"
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+]
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),  # El access token expira en 5 min
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),  # El refresh token dura 1 día
+    "ROTATE_REFRESH_TOKENS": True,  # Si True, refresca el refresh token también
+    "BLACKLIST_AFTER_ROTATION": True,  # Evita reuso de refresh tokens
+}
